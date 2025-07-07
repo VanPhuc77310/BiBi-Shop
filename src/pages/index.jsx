@@ -1,6 +1,6 @@
 import React from "react";
 
-const ImgAdmin = () => {
+const Pages = () => {
     return (
         <h1>All Pages here</h1>
     );
