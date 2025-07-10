@@ -1,11 +1,12 @@
 import { React, useState } from "react";
 import "./Header.scss";
-import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiOutlineTwitter, AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiOutlineTwitter, AiOutlineUser, AiOutlineShoppingCart, AiOutlineMenu, AiOutlinePhone } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../../../../utils/format";
 
 const Header = () => {
 
+    const [isShowCategory, setIsShowCategory] = useState(false);
     const [menus, setMenu] = useState([
         {
             name: "Trang chủ",
@@ -138,6 +139,61 @@ const Header = () => {
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="container">
+                <div className="row header__content">
+                    <div className="col-lg-3 header_category">
+                        <div className="header_category__all" onClick={() => setIsShowCategory(!isShowCategory)}>
+                            <AiOutlineMenu />
+                            Danh sách sản phẩm
+                        </div>
+                        <ul className={isShowCategory ? "" : "hidden"}>
+                            <li>
+                                <Link to="">Thịt tươi</Link>
+                            </li>
+                            <li>
+                                <Link to="">Rau củ</Link>
+                            </li>
+                            <li>
+                                <Link to="">Nước trái cây</Link>
+                            </li>
+                            <li>
+                                <Link to="">Trái cây</Link>
+                            </li>
+                            <li>
+                                <Link to="">Hải sản</Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="col-lg-9 header__search_container">
+                        <div className="header__search">
+                            <div className="header__search__form">
+                                <form >
+                                    <input type="text" placeholder="Bạn đang tìm gì?" />
+                                    <button type="submit">Tìm kiếm</button>
+                                </form>
+                            </div>
+                            <div className="header__search__phone">
+                                <div className="header__search__phone_icon">
+                                    <AiOutlinePhone />
+                                </div>
+                                <div className="header__search__text">
+                                    <p>0868.314.917</p>
+                                    <span>Hỗ trợ 24/7</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="header__item">
+                            <div className="header__text">
+                                <span>Trái cây tươi</span>
+                                <h2>Rau quả <br /> sạch 100%</h2>
+                                <p>Miễn phí giao hàng tận nơi</p>
+                                <Link to="" className="primary-btn">Mua ngay</Link>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

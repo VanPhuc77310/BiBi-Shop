@@ -47,6 +47,11 @@ body {
     max-width: 50%;
 }
 
+.col-lg-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+
 .btn-submit {
     font-size: 14x;
     color: white;
