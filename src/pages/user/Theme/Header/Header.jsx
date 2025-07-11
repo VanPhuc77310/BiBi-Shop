@@ -1,11 +1,21 @@
-import { React, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Header.scss";
 import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiOutlineTwitter, AiOutlineUser, AiOutlineShoppingCart, AiOutlineMenu, AiOutlinePhone } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../../../../utils/format";
+import Login from "../../../../components/Login/Login";
+import Register from "../../../../components/Register/Register";
+import MiniCart from "../../../../components/Cart/MiniCart/MiniCart";
+import chuoiImg from "../../../../assets/user/images/listItem/chuoi.jpg";
+import thitboImg from "../../../../assets/user/images/listItem/thitbo.jpg";
+import oiImg from "../../../../assets/user/images/listItem/oi.jpg";
+import khoaitayImg from "../../../../assets/user/images/listItem/khoaitay_chien.jpg";
+import duahauImg from "../../../../assets/user/images/listItem/dua_hau.jpg";
 
 const Header = () => {
 
+    const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
     const [isShowCategory, setIsShowCategory] = useState(false);
     const [menus, setMenu] = useState([
         {
@@ -46,6 +56,54 @@ const Header = () => {
         },
     ])
 
+    const [showMiniCart, setShowMiniCart] = useState(false);
+    const cartItems = [
+        {
+            image: chuoiImg,
+            name: "Chuối tươi",
+            quantity: 2,
+            price: 35000,
+        },
+        {
+            image: thitboImg,
+            name: "Thịt bò Mỹ",
+            quantity: 1,
+            price: 250000,
+        },
+        {
+            image: oiImg,
+            name: "Ổi sạch",
+            quantity: 3,
+            price: 45000,
+        },
+        {
+            image: khoaitayImg,
+            name: "Khoai tây chiên",
+            quantity: 1,
+            price: 40000,
+        },
+        {
+            image: duahauImg,
+            name: "Dưa hấu",
+            quantity: 2,
+            price: 60000,
+        },
+    ];
+
+    const cartRef = useRef();
+
+    // Đóng MiniCart khi click ngoài
+    useEffect(() => {
+        if (!showMiniCart) return;
+        function handleClickOutside(event) {
+            if (cartRef.current && !cartRef.current.contains(event.target)) {
+                setShowMiniCart(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [showMiniCart]);
+
     return (
         <div>
             <div className="header__top">
@@ -83,9 +141,20 @@ const Header = () => {
                                     <Link to="">
                                         <AiOutlineUser />
                                     </Link>
-                                    <span>Đăng nhập</span>
+                                    <span onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>Đăng nhập</span>
                                 </li>
-
+                                {showLogin && (
+                                    <Login
+                                        onClose={() => setShowLogin(false)}
+                                        onShowRegister={() => setShowRegister(true)}
+                                    />
+                                )}
+                                {showRegister && (
+                                    <Register
+                                        onClose={() => setShowRegister(false)}
+                                        onShowLogin={() => setShowLogin(true)}
+                                    />
+                                )}
                             </ul>
                         </div>
                     </div>
@@ -131,10 +200,12 @@ const Header = () => {
                                 <span>{formatPrice(1230000)}</span>
                             </div>
                             <ul>
-                                <li>
-                                    <Link to="">
-                                        <AiOutlineShoppingCart /> <span>5</span>
-                                    </Link>
+                                <li ref={cartRef} style={{ position: "relative" }}>
+                                    <span style={{ cursor: "pointer" }} onClick={() => setShowMiniCart((v) => !v)}>
+                                        <AiOutlineShoppingCart />
+                                        <span className="cart-badge">{cartItems.length}</span>
+                                    </span>
+                                    <MiniCart open={showMiniCart} onClose={() => setShowMiniCart(false)} items={cartItems} style={{}} />
                                 </li>
                             </ul>
                         </div>
