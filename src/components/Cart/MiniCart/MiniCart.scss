@@ -1,0 +1,99 @@
+@use "sass:map";
+@import "../../../style/pages/theme";
+
+.minicart-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minicart-modal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px 20px 16px 20px;
+    min-width: 320px;
+    max-width: 95vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.minicart-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.minicart-list {
+    margin-top: 16px;
+}
+
+.minicart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.minicart-item-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 16px;
+    border: 1px solid #eee;
+}
+
+.minicart-item-info {
+    flex: 1;
+}
+
+.minicart-item-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.minicart-item-qty,
+.minicart-item-price {
+    font-size: 0.95em;
+    color: #666;
+}
+
+.minicart-empty {
+    text-align: center;
+    color: #888;
+    padding: 24px 0;
+}
+
+.minicart-dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px 20px 16px 20px;
+    min-width: 320px;
+    max-width: 95vw;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1002;
+}
+
+// Ẩn overlay modal cũ nếu còn
+.minicart-modal-overlay {
+    display: none !important;
+}

@@ -1,0 +1,144 @@
+@use "sass:map";
+@import "../../style/pages/theme";
+
+.register-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    &__container {
+        position: relative;
+        width: 900px;
+        max-width: 95%;
+        max-height: 90vh;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+        display: flex;
+    }
+
+    .shop-icon {
+        font-size: 2rem;
+        color: map.get($theme-colors, "main");
+        margin-right: 10px;
+    }
+
+    .register-form {
+        padding: 1rem 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        form {
+            max-width: 320px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        h3 {
+            color: #333;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+    }
+
+    .register-banner {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+
+    .container-fluid {
+        height: 100%;
+
+        .row {
+            height: 100%;
+
+            >div {
+                min-height: 500px;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    &__close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 24px;
+        color: #999;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        z-index: 2;
+
+        &:hover {
+            color: #666;
+        }
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+
+        &:focus {
+            border-color: map.get($theme-colors, "main");
+            box-shadow: 0 0 0 3px rgba(map.get($theme-colors, "main"), 0.1);
+        }
+    }
+
+    .btn-primary {
+        background-color: map.get($theme-colors, "main");
+        border-color: map.get($theme-colors, "main");
+        width: 100%;
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    .link-primary {
+        color: map.get($theme-colors, "normal-text");
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    @media (max-width: 767px) {
+        &__container {
+            max-height: 100vh;
+            border-radius: 0;
+        }
+
+        .register-form {
+            padding: 2rem 1.5rem;
+
+            form {
+                max-width: 100%;
+            }
+        }
+    }
+}

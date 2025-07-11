@@ -17,6 +17,10 @@ import thitBoNac from "../../../assets/user/images/listItem/thitbo.jpg";
 import thitBoMy from "../../../assets/user/images/listItem/thitbo_my.jpg";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import banner1 from "../../../assets/user/images/listItem/banner1.jpg";
+import banner2 from "../../../assets/user/images/listItem/banner2.jpg";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
 
 
 const HomePage = () => {
@@ -63,6 +67,19 @@ const HomePage = () => {
             title: "Thịt bò"
         }
     ]
+
+    const bannerHomepage = [
+        {
+            bgImg: banner1,
+        },
+        {
+            bgImg: banner2,
+        }
+    ]
+
+    const handleAddToCart = (product) => {
+
+    };
 
     const featuredProducts = {
         all: {
@@ -117,9 +134,17 @@ const HomePage = () => {
                         {product[key].products.map((item, idx) => (
                             <div className="featured__product" key={idx}>
                                 <img src={item.img} alt={item.name} />
+
                                 <div className="featured__product-info">
                                     <h4>{item.name}</h4>
                                     <p>{item.price.toLocaleString()} đ</p>
+                                    <div
+                                        className="btn-add-to-cart"
+                                        onClick={() => handleAddToCart(item)}
+                                    >
+                                        <AiOutlineShoppingCart />
+                                        Thêm vào giỏ
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -157,6 +182,21 @@ const HomePage = () => {
                         <h2>Sản phẩm nổi bật</h2>
                     </div>
                     {renderfeaturedProducts(featuredProducts)}
+                </div>
+            </div>
+
+            {/* Banner */}
+            <div className="container">
+                <div className="banner">
+                    {
+                        bannerHomepage.map((banner, i) => (
+                            <div
+                                key={i} className="banner__pic"
+                            >
+                                <img src={banner.bgImg} alt={`banner-${i}`} />
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </div>
