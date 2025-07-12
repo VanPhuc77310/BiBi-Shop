@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: fadeIn 0.3s ease-out;
 
     &__overlay {
         position: absolute;
@@ -18,7 +19,9 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.3s ease-out;
     }
 
     &__container {
@@ -27,25 +30,29 @@
         max-width: 95%;
         max-height: 90vh;
         background: white;
-        border-radius: 16px;
+        border-radius: 20px;
         overflow: hidden;
         z-index: 1;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         display: flex;
+        animation: slideUp 0.4s ease-out;
+        transform-origin: center;
     }
 
     .shop-icon {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: map.get($theme-colors, "main");
-        margin-right: 10px;
+        margin-right: 12px;
+        animation: bounce 2s infinite;
     }
 
     .register-form {
-        padding: 1rem 0;
+        padding: 2rem 0;
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        animation: fadeInUp 0.6s ease-out 0.2s both;
 
         form {
             max-width: 320px;
@@ -58,6 +65,149 @@
             letter-spacing: 0.5px;
             margin-bottom: 1.5rem;
             text-align: center;
+            font-weight: 600;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40px;
+                height: 3px;
+                background: linear-gradient(90deg, map.get($theme-colors, "main"), #ff6b6b);
+                border-radius: 2px;
+                animation: expandWidth 0.8s ease-out 0.5s both;
+            }
+        }
+
+        .form-outline {
+            position: relative;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+
+            &:nth-child(2) {
+                animation-delay: 0.5s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: 0.6s;
+            }
+
+            &:nth-child(4) {
+                animation-delay: 0.7s;
+            }
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+
+            &:focus {
+                border-color: map.get($theme-colors, "main");
+                box-shadow: 0 0 0 4px rgba(map.get($theme-colors, "main"), 0.1);
+                background: white;
+                transform: translateY(-2px);
+            }
+
+            &:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+
+            &.is-invalid {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
+                animation: shake 0.5s ease-in-out;
+            }
+
+            &::placeholder {
+                color: #adb5bd;
+                transition: color 0.3s ease;
+            }
+
+            &:focus::placeholder {
+                color: map.get($theme-colors, "main");
+                transform: translateY(-2px);
+            }
+        }
+
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, map.get($theme-colors, "main"), #ff6b6b);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+
+            &:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s ease;
+            }
+
+            &:hover:not(:disabled) {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(map.get($theme-colors, "main"), 0.3);
+
+                &::before {
+                    left: 100%;
+                }
+            }
+
+            &:active:not(:disabled) {
+                transform: translateY(-1px);
+            }
+        }
+
+        .loading-icon {
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        .link-primary {
+            color: map.get($theme-colors, "main");
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out 0.9s both;
+
+            &:hover {
+                color: #ff6b6b;
+                text-decoration: underline;
+                transform: translateX(5px);
+            }
         }
     }
 
@@ -66,8 +216,14 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
-        border-top-right-radius: 16px;
-        border-bottom-right-radius: 16px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        transition: transform 0.3s ease;
+        animation: slideInRight 0.6s ease-out 0.3s both;
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 
     .container-fluid {
@@ -86,44 +242,27 @@
 
     &__close {
         position: absolute;
-        top: 16px;
-        right: 16px;
-        font-size: 24px;
+        top: 20px;
+        right: 20px;
+        font-size: 28px;
         color: #999;
         cursor: pointer;
-        transition: color 0.3s ease;
+        transition: all 0.3s ease;
         z-index: 2;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
 
         &:hover {
-            color: #666;
-        }
-    }
-
-    .form-control {
-        border: 1px solid #ddd;
-
-        &:focus {
-            border-color: map.get($theme-colors, "main");
-            box-shadow: 0 0 0 3px rgba(map.get($theme-colors, "main"), 0.1);
-        }
-    }
-
-    .btn-primary {
-        background-color: map.get($theme-colors, "main");
-        border-color: map.get($theme-colors, "main");
-        width: 100%;
-
-        &:hover {
-            opacity: 0.9;
-        }
-    }
-
-    .link-primary {
-        color: map.get($theme-colors, "normal-text");
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
+            color: #ff6b6b;
+            background: rgba(255, 255, 255, 1);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
     }
 
@@ -131,6 +270,8 @@
         &__container {
             max-height: 100vh;
             border-radius: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .register-form {
@@ -140,5 +281,118 @@
                 max-width: 100%;
             }
         }
+
+        .register-banner {
+            display: none;
+        }
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes expandWidth {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 40px;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

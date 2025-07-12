@@ -165,6 +165,50 @@
     }
 }
 
+.featured__product-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.btn-add-to-cart-outer {
+    margin-top: 10px;
+    background: linear-gradient(135deg, map.get($theme-colors, "main"), #ff6b6b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 90%;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(map.get($theme-colors, "main"), 0.3);
+    }
+}
+
+// Đảm bảo .featured__product không có margin-bottom để button sát dưới card
+.featured__product {
+    margin-bottom: 0;
+}
+
+.featured__product-info h4,
+.featured__product-info p {
+    text-decoration: none !important;
+}
+
+.featured__product {
+    text-decoration: none;
+}
+
 
 .banner {
     display: flex;
