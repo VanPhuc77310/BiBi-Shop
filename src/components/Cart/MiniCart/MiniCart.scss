@@ -34,6 +34,12 @@
     border: none;
     font-size: 2rem;
     cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: #333;
+    }
 }
 
 .minicart-list {
@@ -42,7 +48,7 @@
 
 .minicart-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 16px;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
@@ -55,27 +61,94 @@
     border-radius: 6px;
     margin-right: 16px;
     border: 1px solid #eee;
+    flex-shrink: 0;
 }
 
 .minicart-item-info {
     flex: 1;
+    min-width: 0;
 }
 
 .minicart-item-name {
     font-weight: 500;
     margin-bottom: 4px;
+    font-size: 0.95em;
+    line-height: 1.3;
 }
 
 .minicart-item-qty,
 .minicart-item-price {
-    font-size: 0.95em;
+    font-size: 0.9em;
     color: #666;
+    margin-bottom: 8px;
+}
+
+.minicart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 12px;
+
+    &:hover {
+        background: #f5f5f5;
+        border-color: #ccc;
+    }
+
+    &:active {
+        background: #e9e9e9;
+    }
+}
+
+.quantity-display {
+    min-width: 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.remove-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ff6b6b;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #ff6b6b;
+    font-size: 12px;
+
+    &:hover {
+        background: #ff6b6b;
+        color: #fff;
+    }
+
+    &:active {
+        background: #ff5252;
+    }
 }
 
 .minicart-empty {
     text-align: center;
     color: #888;
     padding: 24px 0;
+    font-style: italic;
 }
 
 .minicart-dropdown {
@@ -91,6 +164,26 @@
     overflow-y: auto;
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
     z-index: 1002;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+    animation: slideInDown 0.3s ease-out;
+}
+
+// Animation cho MiniCart
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
 }
 
 // Ẩn overlay modal cũ nếu còn
