@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import caNgu from "../../assets/user/images/listItem/ca_ngu.jpg";
 import pate from "../../assets/user/images/listItem/pate.jpg";
-import bangNgu from "../../assets/user/images/listItem/bang_ngu.jpg";
 import "./UserProfilePage.scss";
 
 const PRODUCTS = {
@@ -14,11 +13,6 @@ const PRODUCTS = {
         name: "Pate",
         price: 20000,
         img: pate
-    },
-    "bang-ngu": {
-        name: "Bà má Băng ngu chúa",
-        price: 2000,
-        img: bangNgu
     }
 };
 
@@ -36,13 +30,6 @@ const ORDERS = [
             { id: "pate", quantity: 3 }
         ],
         status: "Đang xử lý"
-    },
-    {
-        id: "DH003",
-        products: [
-            { id: "bang-ngu", quantity: 1 }
-        ],
-        status: "Đang trong quá trình bán"
     }
 ];
 
