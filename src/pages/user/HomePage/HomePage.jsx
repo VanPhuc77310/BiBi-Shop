@@ -22,6 +22,8 @@ import banner2 from "../../../assets/user/images/listItem/banner2.jpg";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useCart } from "../../../context/CartContext";
 import { Link } from "react-router-dom";
+import caNgu from "../../../assets/user/images/listItem/ca_ngu.jpg";
+import pate from "../../../assets/user/images/listItem/pate.jpg";
 
 const HomePage = () => {
     const { addToCart } = useCart();
@@ -68,6 +70,14 @@ const HomePage = () => {
         {
             bgImg: thitBo,
             title: "Thịt bò"
+        },
+        {
+            bgImg: caNgu,
+            title: "Cá ngừ"
+        },
+        {
+            bgImg: pate,
+            title: "Pate"
         }
     ]
 
@@ -104,6 +114,8 @@ const HomePage = () => {
                 { id: "khoai-tay-chien", img: khoaiTayChien, name: "Khoai tây chiên", price: 12000 },
                 { id: "mang-cut", img: mangCut, name: "Măng cụt", price: 25000 },
                 { id: "oi", img: oi, name: "Ổi", price: 8000 },
+                { id: "ca-ngu", img: caNgu, name: "Cá ngừ", price: 10000 },
+                { id: "pate", img: pate, name: "Pate", price: 20000 },
             ]
         },
         freshMeat: {
@@ -111,6 +123,7 @@ const HomePage = () => {
             products: [
                 { id: "thit-bo-nac", img: thitBoNac, name: "Thịt bò nạc", price: 10000 },
                 { id: "thit-bo-my", img: thitBoMy, name: "Thịt bò Mỹ", price: 20000 },
+                { id: "ca-ngu", img: caNgu, name: "Cá ngừ", price: 10000 },
             ]
         },
         fruits: {
@@ -127,6 +140,7 @@ const HomePage = () => {
             products: [
                 { id: "hamburger", img: hamburger, name: "Hamburger", price: 30000 },
                 { id: "khoai-tay-chien", img: khoaiTayChien, name: "Khoai tây chiên", price: 12000 },
+                { id: "pate", img: pate, name: "Pate", price: 20000 },
             ]
         }
     }

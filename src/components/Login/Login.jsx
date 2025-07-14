@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineShop, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 const Login = ({ onClose, onShowRegister }) => {
@@ -7,6 +9,8 @@ const Login = ({ onClose, onShowRegister }) => {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({});
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleShowRegister = (e) => {
         e.preventDefault();
@@ -40,12 +44,24 @@ const Login = ({ onClose, onShowRegister }) => {
 
         setIsLoading(true);
 
-        // Simulate API call
         setTimeout(() => {
+            const result = login(username, password);
             setIsLoading(false);
-            // Here you would typically make an API call
-            console.log("Login attempt:", { username, password });
-        }, 2000);
+            if (result.success) {
+                onClose();
+                if (result.user.role === "admin") {
+                    navigate("/dashboard");
+                } else {
+                    // stay on current page or reload
+                    window.location.reload();
+                }
+            } else {
+                setErrors({
+                    username: "",
+                    password: "Sai tài khoản hoặc mật khẩu!"
+                });
+            }
+        }, 1000);
     };
 
     return (
