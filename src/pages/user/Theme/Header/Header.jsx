@@ -7,6 +7,8 @@ import Login from "../../../../components/Login/Login";
 import Register from "../../../../components/Register/Register";
 import MiniCart from "../../../../components/Cart/MiniCart/MiniCart";
 import { useCart } from "../../../../context/CartContext";
+import { useAuth } from "../../../../context/AuthContext";
+import userAvatar from "../../../../assets/user/images/avatar_user.jpg";
 
 const Header = () => {
 
@@ -56,6 +58,9 @@ const Header = () => {
     const { cartItems, getCartTotal, getCartCount } = useCart();
     const [searchValue, setSearchValue] = useState("");
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const [showUserDropdown, setShowUserDropdown] = useState(false);
+    const userMenuRef = useRef();
 
     const cartRef = useRef();
     const hoverTimeoutRef = useRef(null);
@@ -84,6 +89,25 @@ const Header = () => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isShowCategory]);
+
+    // Đóng dropdown user khi click ngoài
+    useEffect(() => {
+        if (!showUserDropdown) return;
+        function handleClickOutside(event) {
+            if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+                setShowUserDropdown(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [showUserDropdown]);
+
+    // Nếu là admin, tự động chuyển hướng sang dashboard
+    useEffect(() => {
+        if (user && user.role === "admin") {
+            navigate("/dashboard");
+        }
+    }, [user, navigate]);
 
     const handleCartClick = (e) => {
         e.preventDefault();
@@ -160,23 +184,46 @@ const Header = () => {
                                         <AiOutlineTwitter />
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link to="">
-                                        <AiOutlineUser />
-                                    </Link>
-                                    <span onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>Đăng nhập</span>
-                                </li>
-                                {showLogin && (
-                                    <Login
-                                        onClose={() => setShowLogin(false)}
-                                        onShowRegister={() => setShowRegister(true)}
-                                    />
+                                {/* Nếu chưa đăng nhập */}
+                                {!user && (
+                                    <>
+                                        <li>
+                                            <Link to="">
+                                                <AiOutlineUser />
+                                            </Link>
+                                            <span onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>Đăng nhập</span>
+                                        </li>
+                                        {showLogin && (
+                                            <Login
+                                                onClose={() => setShowLogin(false)}
+                                                onShowRegister={() => setShowRegister(true)}
+                                            />
+                                        )}
+                                        {showRegister && (
+                                            <Register
+                                                onClose={() => setShowRegister(false)}
+                                                onShowLogin={() => setShowLogin(true)}
+                                            />
+                                        )}
+                                    </>
                                 )}
-                                {showRegister && (
-                                    <Register
-                                        onClose={() => setShowRegister(false)}
-                                        onShowLogin={() => setShowLogin(true)}
-                                    />
+                                {/* Nếu đã đăng nhập user */}
+                                {user && user.username === "user" && (
+                                    <li className="header__user-menu" ref={userMenuRef}>
+                                        <span style={{ cursor: "pointer", display: "flex", alignItems: "center" }} onClick={() => setShowUserDropdown(v => !v)}>
+                                            <img src={user.avatar || userAvatar} alt="avatar" style={{ width: 28, height: 28, borderRadius: "50%", marginRight: 6, objectFit: 'cover' }} />
+                                            {user.name || user.username}
+                                        </span>
+                                        {showUserDropdown && (
+                                            <div className="header__user-dropdown">
+                                                <img className="avatar" src={user.avatar || userAvatar} alt="avatar" />
+                                                <div className="user-name">{user.name || user.username}</div>
+                                                <div className="user-email">{user.email}</div>
+                                                <button onClick={() => { setShowUserDropdown(false); window.location.href = '/profile'; }}>Thông tin cá nhân</button>
+                                                <button onClick={() => { setShowUserDropdown(false); logout(); }}>Đăng xuất</button>
+                                            </div>
+                                        )}
+                                    </li>
                                 )}
                             </ul>
                         </div>

@@ -12,6 +12,8 @@ import mangCut from "../../../assets/user/images/listItem/mangcut.jpg";
 import oi from "../../../assets/user/images/listItem/oi.jpg";
 import thitBoNac from "../../../assets/user/images/listItem/thitbo.jpg";
 import thitBoMy from "../../../assets/user/images/listItem/thitbo_my.jpg";
+import caNgu from "../../../assets/user/images/listItem/ca_ngu.jpg";
+import pate from "../../../assets/user/images/listItem/pate.jpg";
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -181,6 +183,46 @@ const ProductDetail = () => {
             rating: 4.2,
             reviews: 112,
             sold: 1800
+        },
+        "ca-ngu": {
+            id: "ca-ngu",
+            name: "Cá ngừ",
+            price: 10000,
+            originalPrice: 12000,
+            images: [caNgu, caNgu, caNgu, caNgu],
+            category: "Thịt tươi",
+            description: "Cá ngừ tươi ngon, giàu dinh dưỡng, thích hợp cho các món ăn như sashimi, nướng, kho.",
+            details: {
+                "Xuất xứ": "Việt Nam",
+                "Trọng lượng": "500g",
+                "Tình trạng": "Tươi mới",
+                "Bảo quản": "Tủ lạnh",
+                "Hạn sử dụng": "3 ngày"
+            },
+            inStock: true,
+            rating: 4.7,
+            reviews: 102,
+            sold: 900
+        },
+        "pate": {
+            id: "pate",
+            name: "Pate",
+            price: 20000,
+            originalPrice: 25000,
+            images: [pate, pate, pate, pate],
+            category: "Thức ăn nhanh",
+            description: "Pate thơm ngon, béo ngậy, dùng ăn kèm bánh mì hoặc các món ăn khác.",
+            details: {
+                "Xuất xứ": "Pháp",
+                "Trọng lượng": "200g",
+                "Tình trạng": "Đóng hộp",
+                "Bảo quản": "Nhiệt độ phòng",
+                "Hạn sử dụng": "6 tháng"
+            },
+            inStock: true,
+            rating: 4.5,
+            reviews: 88,
+            sold: 700
         }
     };
 
