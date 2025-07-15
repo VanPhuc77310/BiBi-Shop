@@ -6,5 +6,7 @@ export const ROUTES = {
         SEARCH: '/search',
         NOT_FOUND: '*',
         PROFILE: '/profile',
+        STORE: '/cua-hang',
+        BLOG: '/bai-viet',
     }
 }
