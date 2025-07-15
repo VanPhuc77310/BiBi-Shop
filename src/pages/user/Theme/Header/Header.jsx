@@ -9,6 +9,7 @@ import MiniCart from "../../../../components/Cart/MiniCart/MiniCart";
 import { useCart } from "../../../../context/CartContext";
 import { useAuth } from "../../../../context/AuthContext";
 import userAvatar from "../../../../assets/user/images/avatar_user.jpg";
+import ContactModal from "../../ContactModal/ContactModal";
 
 const Header = () => {
 
@@ -65,6 +66,25 @@ const Header = () => {
     const cartRef = useRef();
     const hoverTimeoutRef = useRef(null);
     const categoryRef = useRef();
+    const [showContactModal, setShowContactModal] = useState(false);
+
+    const productCategories = [
+        {
+            name: "Thịt & Cá",
+            filter: "meat-fish",
+            keywords: ["thịt", "cá", "thịt bò", "cá ngừ"]
+        },
+        {
+            name: "Rau củ",
+            filter: "vegetable",
+            keywords: ["rau", "củ", "rau củ"]
+        },
+        {
+            name: "Thức ăn nhanh",
+            filter: "fastfood",
+            keywords: ["hamburger", "khoai tây chiên", "pate", "thức ăn nhanh"]
+        }
+    ];
 
     // Đóng MiniCart khi click ngoài
     useEffect(() => {
@@ -134,11 +154,9 @@ const Header = () => {
     };
 
     const handleCartLeave = () => {
-        // Clear timeout nếu có
         if (hoverTimeoutRef.current) {
             clearTimeout(hoverTimeoutRef.current);
         }
-        // Thêm delay nhỏ trước khi đóng
         hoverTimeoutRef.current = setTimeout(() => {
             setShowMiniCart(false);
         }, 300);
@@ -148,6 +166,26 @@ const Header = () => {
         e.preventDefault();
         if (searchValue.trim()) {
             navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+        }
+    };
+
+    const handleMenuClick = (menu) => {
+        if (menu.name === "Liên hệ") {
+            setShowContactModal(true);
+        } else {
+            navigate(menu.path);
+        }
+    };
+    const handleProductChildClick = (childItem) => {
+        // Nếu là meat-fish thì filter theo cả thịt và cá
+        if (childItem.filter === "meat-fish") {
+            navigate(`/search?category=meat-fish`);
+        } else if (childItem.filter === "fastfood") {
+            navigate(`/search?category=fastfood`);
+        } else if (childItem.filter === "vegetable") {
+            navigate(`/search?category=vegetable`);
+        } else {
+            navigate(`/search?q=${encodeURIComponent(childItem.name)}`);
         }
     };
 
@@ -245,21 +283,20 @@ const Header = () => {
                                 {
                                     menus.map((menu, index) => (
                                         <li key={index} className={index === 0 ? "header__menu-active" : ""}>
-                                            <Link to={menu.path}>{menu.name}</Link>
-                                            {
-                                                menu.child && (
+                                            {menu.name === "Sản phẩm" ? (
+                                                <>
+                                                    <span style={{ cursor: 'pointer' }}>{menu.name}</span>
                                                     <ul className="header__menu-dropdown">
-                                                        {
-                                                            menu.child.map((childItem, childKey) => (
-                                                                <li key={`${index}-${childKey}`}>
-                                                                    <Link to={childItem.path}>{childItem.name}</Link>
-                                                                </li>
-
-                                                            ))
-                                                        }
+                                                        {productCategories.map((cat, catIdx) => (
+                                                            <li key={catIdx}>
+                                                                <a href="#" onClick={e => { e.preventDefault(); handleProductChildClick(cat); }}>{cat.name}</a>
+                                                            </li>
+                                                        ))}
                                                     </ul>
-                                                )
-                                            }
+                                                </>
+                                            ) : (
+                                                <span style={{ cursor: 'pointer' }} onClick={() => handleMenuClick(menu)}>{menu.name}</span>
+                                            )}
                                         </li>
                                     ))
                                 }
@@ -340,6 +377,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            <ContactModal open={showContactModal} onClose={() => setShowContactModal(false)} />
         </div>
     );
 }

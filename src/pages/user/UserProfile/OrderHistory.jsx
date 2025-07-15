@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import caNgu from "../../assets/user/images/listItem/ca_ngu.jpg";
-import pate from "../../assets/user/images/listItem/pate.jpg";
+import caNgu from "../../../assets/user/images/listItem/ca_ngu.jpg";
+import pate from "../../../assets/user/images/listItem/pate.jpg";
 import "./UserProfilePage.scss";
 
 const PRODUCTS = {

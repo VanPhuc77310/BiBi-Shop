@@ -128,7 +128,7 @@ $bannerHeader: "../../../../assets/user/images/banner/bannerHeader.jpg";
         }
 
         .header__menu-dropdown {
-            background: #222222;
+            background: #fff;
             display: block;
             position: absolute;
             width: 180px;
@@ -137,19 +137,24 @@ $bannerHeader: "../../../../assets/user/images/banner/bannerHeader.jpg";
             transition: all 0.3s;
             opacity: 0;
             visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
 
             li {
-
                 a {
                     text-transform: capitalize;
-                    color: white;
-                    padding: 5px 15px;
-                    font-weight: 400;
-
+                    color: map.get($theme-colors, "main");
+                    padding: 8px 18px;
+                    font-weight: 600;
+                    background: none;
+                    border-radius: 6px;
+                    display: block;
+                    transition: background 0.18s, color 0.18s;
                 }
 
-                :hover {
-                    color: map.get($theme-colors, "main");
+                &:hover a {
+                    color: #fff;
+                    background: map.get($theme-colors, "main");
                 }
             }
         }

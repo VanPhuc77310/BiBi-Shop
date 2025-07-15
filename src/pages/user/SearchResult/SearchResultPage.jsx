@@ -9,18 +9,22 @@ import mangCut from "../../../assets/user/images/listItem/mangcut.jpg";
 import oi from "../../../assets/user/images/listItem/oi.jpg";
 import thitBoNac from "../../../assets/user/images/listItem/thitbo.jpg";
 import thitBoMy from "../../../assets/user/images/listItem/thitbo_my.jpg";
+import caNgu from "../../../assets/user/images/listItem/ca_ngu.jpg";
+import pate from "../../../assets/user/images/listItem/pate.jpg";
 import { formatPrice } from "../../../utils/format";
 import "./SearchResultPage.scss";
 
 const allProducts = [
     { id: "thit-bo-nac", img: thitBoNac, name: "Thịt bò nạc", price: 10000, category: "Thịt tươi" },
     { id: "thit-bo-my", img: thitBoMy, name: "Thịt bò Mỹ", price: 20000, category: "Thịt tươi" },
+    { id: "ca-ngu", img: caNgu, name: "Cá ngừ", price: 12000, category: "Thịt tươi" },
     { id: "chuoi", img: chuoi, name: "Chuối", price: 5000, category: "Trái cây" },
     { id: "dua-hau", img: duaHau, name: "Dưa hấu", price: 15000, category: "Trái cây" },
-    { id: "hamburger", img: hamburger, name: "Hamburger", price: 30000, category: "Thức ăn nhanh" },
-    { id: "khoai-tay-chien", img: khoaiTayChien, name: "Khoai tây chiên", price: 12000, category: "Thức ăn nhanh" },
     { id: "mang-cut", img: mangCut, name: "Măng cụt", price: 25000, category: "Trái cây" },
     { id: "oi", img: oi, name: "Ổi", price: 8000, category: "Trái cây" },
+    { id: "hamburger", img: hamburger, name: "Hamburger", price: 30000, category: "Thức ăn nhanh" },
+    { id: "khoai-tay-chien", img: khoaiTayChien, name: "Khoai tây chiên", price: 12000, category: "Thức ăn nhanh" },
+    { id: "pate", img: pate, name: "Pate", price: 20000, category: "Thức ăn nhanh" },
 ];
 
 const categories = [
@@ -48,21 +52,35 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
+// Thêm mapping cho filter category
+const CATEGORY_MAP = {
+    "meat-fish": ["thit-bo-nac", "thit-bo-my", "ca-ngu"],
+    "fastfood": ["hamburger", "khoai-tay-chien", "pate"],
+    "vegetable": ["mang-cut", "oi", "dua-hau", "chuoi"]
+};
+
 const PAGE_SIZE = 6;
 
 const SearchResultPage = () => {
     const query = useQuery();
     const keyword = query.get("q") || "";
+    const categoryParam = query.get("category");
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedPrice, setSelectedPrice] = useState(null);
     const [sort, setSort] = useState("default");
     const [page, setPage] = useState(1);
 
-    // Lọc sản phẩm theo từ khóa, danh mục, khoảng giá
+    // Lọc sản phẩm theo category param hoặc từ khóa, danh mục, khoảng giá
     const filteredProducts = useMemo(() => {
-        let result = allProducts.filter(p =>
-            p.name.toLowerCase().includes(keyword.toLowerCase())
-        );
+        let result = allProducts;
+        if (categoryParam && CATEGORY_MAP[categoryParam]) {
+            result = result.filter(p => CATEGORY_MAP[categoryParam].includes(p.id));
+        } else {
+            // Lọc theo từ khóa nếu không có category param
+            result = result.filter(p =>
+                p.name.toLowerCase().includes(keyword.toLowerCase())
+            );
+        }
         if (selectedCategories.length > 0) {
             result = result.filter(p => selectedCategories.includes(p.category));
         }
@@ -86,7 +104,7 @@ const SearchResultPage = () => {
                 break;
         }
         return result;
-    }, [keyword, selectedCategories, selectedPrice, sort]);
+    }, [keyword, selectedCategories, selectedPrice, sort, categoryParam]);
 
     // Phân trang
     const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
